@@ -1,0 +1,76 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "description" : "How many times a given word appears in each site provided? This API answer it",
+    "version" : "1.0.0",
+    "title" : "WordApp",
+    "contact" : {
+      "email" : "caioignm@gmail.com"
+    },
+    "license" : {
+      "name" : "Apache 2.0",
+      "url" : "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "paths" : {
+    "/" : {
+      "get" : {
+        "summary" : "returns how many times a given word appears in each provided URL",
+        "description" : "By passing in the appropriate options, you can search for\nthe number of occurrences of a given word in each URL provided\n",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "word",
+          "in" : "query",
+          "description" : "pass a word for looking up its occurrences in each site",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "url",
+          "in" : "query",
+          "description" : "a list of valid URLs",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "search results matching criteria",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Data"
+              }
+            }
+          },
+          "500" : {
+            "description" : "Internal Server Error"
+          }
+        }
+      }
+    }
+  },
+  "definitions" : {
+    "Data" : {
+      "type" : "object",
+      "required" : [ "url", "value", "word" ],
+      "properties" : {
+        "word" : {
+          "type" : "string",
+          "example" : "Brazil"
+        },
+        "url" : {
+          "type" : "string",
+          "example" : "https://www.nytimes.com/"
+        },
+        "value" : {
+          "type" : "integer",
+          "example" : 12
+        }
+      },
+      "example" : {
+        "word" : "Brazil",
+        "value" : 12,
+        "url" : "https://www.nytimes.com/"
+      }
+    }
+  }
+}
